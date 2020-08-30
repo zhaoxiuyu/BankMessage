@@ -1,0 +1,12 @@
+{
+  "BusUtilsClass": "com.blankj.utilcode.util.BusUtils",
+  "rightBus": {
+    "BUS_ReceivedSMS": [
+      "{ desc: com.example.bankmessage.modular.common.ui.AccountFragment#receivedSMS(java.lang.String param) }"
+    ],
+    "BUS_RefreshJournal": [
+      "{ desc: com.example.bankmessage.modular.common.ui.JournalFragment#receivedSMS() }"
+    ]
+  },
+  "wrongBus": {}
+}

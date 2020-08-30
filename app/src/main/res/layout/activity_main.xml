@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_407DE3"
+        android:padding="@dimen/dp_8">
+
+        <TextView
+            android:id="@+id/tvUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="当前用户\n运行状态：未启动"
+            android:textColor="@color/color_FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:background="@drawable/bg_account_start"
+            android:paddingStart="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingEnd="@dimen/dp_14"
+            android:paddingBottom="@dimen/dp_4"
+            android:text="启动"
+            android:textColor="@color/color_FFFFFF" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_nav_menu" />
+
+</LinearLayout>

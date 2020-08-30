@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="AnRanSendInfo" />
+
+    <version value="3" />
+
+    <list>
+        <mapping class="com.base.library.dao.entity.Journal" />
+        <mapping class="com.example.bankmessage.entity.Bank" />
+        <mapping class="com.example.bankmessage.entity.SystemJournal" />
+    </list>
+
+    <!--    <storage value="RoomBaseLibrary" />-->
+
+</litepal>

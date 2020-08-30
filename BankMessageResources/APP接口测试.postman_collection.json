@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "4b65b2c2-030b-4fd3-9f4f-fc677b9af35c",
+		"name": "APP接口测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/Login?username=test&pwd=123456",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"Login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test"
+						},
+						{
+							"key": "pwd",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "校验设备KEY",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/CheckKey",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"CheckKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取设备信息",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/GetDeviceInfo?userid=12467&devicekey=53DBD3CEF3AE46A2",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"GetDeviceInfo"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "12467"
+						},
+						{
+							"key": "devicekey",
+							"value": "53DBD3CEF3AE46A2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取银行列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/GetBankList",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"GetBankList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "提交短信信息",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/PostMessage",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"PostMessage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "保持在线",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://118.25.126.160:83/App/KeepAlive?userid=12467&devicekey=53DBD3CEF3AE46A2",
+					"protocol": "http",
+					"host": [
+						"118",
+						"25",
+						"126",
+						"160"
+					],
+					"port": "83",
+					"path": [
+						"App",
+						"KeepAlive"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "12467"
+						},
+						{
+							"key": "devicekey",
+							"value": "53DBD3CEF3AE46A2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
