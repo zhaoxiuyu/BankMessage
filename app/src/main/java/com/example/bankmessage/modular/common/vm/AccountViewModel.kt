@@ -94,4 +94,17 @@ class AccountViewModel : VMViewModel() {
         getData(rxHttp, KeepAliveLiveData, Login::class.java)
     }
 
+    /**
+     * 获取设备列表信息
+     */
+    val deviceInfoListLiveData by lazy { MutableLiveData<BResponse<MutableList<GetDeviceInfo>>>() }
+    fun GetDeviceInfoList(devicekey: String) {
+        val rxHttp = BRequest(AppConstant.GetDeviceInfoList, BRequest.PostForm).apply {
+            silence = true
+            params =
+                mapOf("userid" to MMKVUtils.getStr(AppConstant.userid), "devicekeys" to devicekey)
+        }.build()
+        getDatas(rxHttp, deviceInfoListLiveData, GetDeviceInfo::class.java)
+    }
+
 }

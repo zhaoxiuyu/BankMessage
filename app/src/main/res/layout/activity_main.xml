@@ -18,18 +18,50 @@
             android:text="当前用户\n运行状态：未启动"
             android:textColor="@color/color_FFFFFF" />
 
-        <TextView
-            android:id="@+id/tvStart"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:background="@drawable/bg_account_start"
-            android:paddingStart="@dimen/dp_14"
-            android:paddingTop="@dimen/dp_4"
-            android:paddingEnd="@dimen/dp_14"
-            android:paddingBottom="@dimen/dp_4"
-            android:text="启动"
-            android:textColor="@color/color_FFFFFF" />
+            android:layout_gravity="right|center">
+
+            <TextView
+                android:id="@+id/tvRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:background="@drawable/bg_account_start"
+                android:paddingStart="@dimen/dp_14"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingEnd="@dimen/dp_14"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="刷新"
+                android:textColor="@color/color_34CC2C" />
+
+            <TextView
+                android:id="@+id/tvclear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:background="@drawable/bg_account_start"
+                android:paddingStart="@dimen/dp_14"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingEnd="@dimen/dp_14"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="清理"
+                android:textColor="@color/color_E70012" />
+
+            <TextView
+                android:id="@+id/tvStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_account_start"
+                android:paddingStart="@dimen/dp_14"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingEnd="@dimen/dp_14"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="启动"
+                android:textColor="@color/color_FFFFFF" />
+        </LinearLayout>
+
     </FrameLayout>
 
     <FrameLayout

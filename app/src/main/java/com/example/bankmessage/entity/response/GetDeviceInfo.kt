@@ -11,4 +11,6 @@ class GetDeviceInfo {
     var TodayAmount: Double = 0.0 // ": 555.33,  今日收款
     var YestodayAmount: Double = 0.0  // ": 0.00  昨日收款
 
+    var DeviceKey: String = ""  // ": 0.00  设备 KEY
+
 }

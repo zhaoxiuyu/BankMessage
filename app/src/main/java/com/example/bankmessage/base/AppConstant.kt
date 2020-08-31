@@ -23,6 +23,8 @@ object AppConstant {
     // 6.	保持在线 / 保持当前登录在线状态，10秒请求一次
     const val KeepAlive = "App/KeepAlive"
 
+    // 7.   获取设备列表信息
+    const val GetDeviceInfoList = "App/GetDeviceInfoList"
 
     /**
      * 保存数据的key
@@ -40,5 +42,8 @@ object AppConstant {
 
     // 刷新日志
     const val BUS_RefreshJournal: String = "BUS_RefreshJournal"
+
+    // 刷新设备列表数据
+    const val BUS_RefreshDeviceInfoList: String = "BUS_RefreshDeviceInfoList"
 
 }

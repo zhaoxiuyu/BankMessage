@@ -26,7 +26,9 @@ import com.rxjava.rxlife.life
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_account.*
 import org.litepal.LitePal
@@ -60,6 +62,7 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
         BusUtils.register(this)
         initResponse()
         timing()
+        polling()
 
         homeRv.layoutManager = LinearLayoutManager(requireActivity())
         homeRv.adapter = mAdapter
@@ -142,11 +145,33 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
                 bankListData.addAll(getBankList)
             }
         })
-
         // 提交短信信息
         viewModel.postMessageLiveData.observe(this, Observer {
             DataUtils.saveSystemJournal("提交返回", "${it.msg}", httpCode = it.code)
         })
+        // 获取设备列表信息
+        viewModel.deviceInfoListLiveData.observe(this, Observer {
+            val bankAll = getBankAll()
+            it.data?.forEach { info ->
+                bankAll.forEach { bank ->
+                    if (bank.key == info.DeviceKey
+                        && bank.type == info.BankName
+                        && bank.code == info.BankCode
+                    ) {
+                        bank.today = info.TodayAmount
+                        bank.yesterday = info.YestodayAmount
+                        bank.save()
+                    }
+                }
+            }
+            mAdapter.setNewInstance(getBankAll())
+        })
+    }
+
+    @Bus(tag = AppConstant.BUS_RefreshDeviceInfoList)
+    fun refreshDeviceInfoList() {
+        LogUtils.d("手动刷新设备列表信息")
+        getDeviceInfoList()
     }
 
     @Bus(tag = AppConstant.BUS_ReceivedSMS)
@@ -211,6 +236,40 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
                 viewModel.getCheckKey(result ?: "")
             }
         }
+    }
+
+    // 获取设备列表数据
+    private fun getDeviceInfoList() {
+        val sb = StringBuilder()
+        val bankAll = getBankAll()
+        bankAll.forEach {
+            if (!StringUtils.isEmpty(it.key)) {
+                sb.append("${it.key},")
+            }
+        }
+        viewModel.GetDeviceInfoList(sb.toString())
+    }
+
+    // 获取设备列表信息
+    private var mDisposable: Disposable? = null
+    private fun polling() {
+        Observable.interval(60, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : io.reactivex.rxjava3.core.Observer<Long?> {
+                override fun onSubscribe(d: @NonNull Disposable?) {
+                    mDisposable = d
+                }
+
+                override fun onNext(aLong: @NonNull Long?) {
+                    getDeviceInfoList()
+                }
+
+                override fun onError(e: @NonNull Throwable?) {
+                    e?.printStackTrace()
+                }
+
+                override fun onComplete() {}
+            })
     }
 
     // 拍照权限

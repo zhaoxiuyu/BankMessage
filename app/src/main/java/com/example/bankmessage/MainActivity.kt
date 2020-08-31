@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.*
 import com.example.bankmessage.base.AppConstant
 import com.example.bankmessage.broadcast.SmsReceiver
 import com.example.bankmessage.entity.Bank
+import com.example.bankmessage.entity.SystemJournal
 import com.example.bankmessage.modular.common.ui.AccountFragment
 import com.example.bankmessage.modular.common.ui.JournalFragment
 import com.example.bankmessage.modular.common.ui.OtherFragment
@@ -27,6 +28,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.litepal.LitePal
 import java.util.concurrent.TimeUnit
+
 
 class MainActivity : VMActivity() {
 
@@ -62,6 +64,20 @@ class MainActivity : VMActivity() {
 
         tvStart.setOnClickListener {
             startPermission()
+        }
+        tvclear.setOnClickListener {
+            // 把保持在线和保持返回清理掉，剩下的留下，如果保持返回有网络异常也留下 LitePal.deleteAll(MainEntity.class,"name = ?" ,"张三");
+            LitePal.deleteAll(SystemJournal::class.java, "operation = ?", "保持在线")
+            LitePal.deleteAll(
+                SystemJournal::class.java,
+                "operation = ? and httpCode = ?",
+                "保持返回",
+                "0"
+            )
+            ToastUtils.showLong("清理成功，请稍候，等待刷新")
+        }
+        tvRefresh.setOnClickListener {
+            BusUtils.post(AppConstant.BUS_RefreshDeviceInfoList)
         }
     }
 
