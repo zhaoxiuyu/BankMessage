@@ -107,6 +107,8 @@ class MainActivity : VMActivity() {
         if (url == AppConstant.KeepAlive) {
             DataUtils.saveSystemJournal("保持返回", "$msg", httpCode = 500)
             BusUtils.post(AppConstant.BUS_RefreshJournal)
+        } else if (url == AppConstant.PostMessage) {
+            DataUtils.saveSystemJournal("提交返回", "$msg", httpCode = 500)
         }
         super.onError(msg, url, isFinish, isSilence)
     }

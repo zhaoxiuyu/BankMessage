@@ -207,12 +207,12 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
         }
     }
 
-    override fun onError(msg: String, url: String?, isFinish: Boolean, isSilence: Boolean) {
-        super.onError(msg, url, isFinish, isSilence)
-        if (url == AppConstant.PostMessage) {
-            DataUtils.saveSystemJournal("提交返回", "$msg", httpCode = 500)
-        }
-    }
+//    override fun onError(msg: String, url: String?, isFinish: Boolean, isSilence: Boolean) {
+//        if (url == AppConstant.PostMessage) {
+//            DataUtils.saveSystemJournal("提交返回", "$msg", httpCode = 500)
+//        }
+//        super.onError(msg, url, isFinish, isSilence)
+//    }
 
     // 银行列表，先默认获取一次，然后再每五分钟调用一次
     private fun timing() {
