@@ -17,6 +17,7 @@ import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_login.*
 import org.litepal.LitePal
 
+
 class LoginActivity : VMActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(AccountViewModel::class.java) }
@@ -39,6 +40,27 @@ class LoginActivity : VMActivity() {
             }
             startPermission()
         }
+
+//        tieUserName.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//                LogUtils.d(p0?.toString())
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//        })
+//        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+//            val regEx =
+//                "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]"
+//            val pattern = Pattern.compile(regEx)
+//            val matcher = pattern.matcher(source.toString())
+//            if (matcher.find() || source == " ") "" else null
+//        }
+//        val lengthFilter = LengthFilter(10)
+//        tieUserName.filters = arrayOf(filter, lengthFilter)
     }
 
     private fun initResponse() {
