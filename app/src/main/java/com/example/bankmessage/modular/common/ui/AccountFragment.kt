@@ -54,7 +54,6 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
     override fun initArgs(bundle: Bundle?) = viewModel
 
     override fun initView(bundle: Bundle?) {
-        super.initView(bundle)
         setContentView(R.layout.fragment_account)
     }
 

@@ -11,6 +11,7 @@ import com.base.library.mvvm.core.VMActivity
 import com.base.library.util.MMKVUtils
 import com.blankj.utilcode.util.*
 import com.example.bankmessage.base.AppConstant
+import com.example.bankmessage.base.ChangeConstant
 import com.example.bankmessage.broadcast.SmsReceiver
 import com.example.bankmessage.entity.Bank
 import com.example.bankmessage.entity.SystemJournal
@@ -47,6 +48,11 @@ class MainActivity : VMActivity() {
     override fun initView() {
         super.initView()
         setContentView(R.layout.activity_main)
+
+        filter = IntentFilter()
+        filter?.addAction("android.provider.Telephony.SMS_RECEIVED")
+        receiver = SmsReceiver()
+        registerReceiver(receiver, filter) //注册广播接收器
     }
 
     override fun initData() {
@@ -98,11 +104,11 @@ class MainActivity : VMActivity() {
     }
 
     override fun onError(msg: String, url: String?, isFinish: Boolean, isSilence: Boolean) {
-        super.onError(msg, url, isFinish, isSilence)
         if (url == AppConstant.KeepAlive) {
             DataUtils.saveSystemJournal("保持返回", "$msg", httpCode = 500)
             BusUtils.post(AppConstant.BUS_RefreshJournal)
         }
+        super.onError(msg, url, isFinish, isSilence)
     }
 
     private fun updateUserInfo(isStart: Boolean = false) {
@@ -156,28 +162,25 @@ class MainActivity : VMActivity() {
     }
 
     private fun SMSRegister() {
-        if (filter == null || receiver == null) {
-            LogUtils.d("开始监听")
-            filter = IntentFilter()
-            filter?.addAction("android.provider.Telephony.SMS_RECEIVED")
-            receiver = SmsReceiver()
-            registerReceiver(receiver, filter) //注册广播接收器
+        if (ChangeConstant.isMonitor) {
+            // 如果监听打开，就关闭
+            ChangeConstant.isMonitor = false
 
-            polling()
-
-            tvStart.text = "停止"
-            updateUserInfo(true)
-        } else {
             tvStart.text = "启动"
             updateUserInfo(false)
 
-            filter = null
-            receiver = null
-
-            receiver?.let { unregisterReceiver(it) }
             mDisposable?.dispose()
             LogUtils.d("结束监听")
+        } else {
+            // 如果监听关闭，就打开
+            ChangeConstant.isMonitor = true
+            LogUtils.d("开始监听")
+
+            polling()
+            tvStart.text = "停止"
+            updateUserInfo(true)
         }
+        LogUtils.d("监听是否打开 : ${ChangeConstant.isMonitor}")
     }
 
     // 保持在线

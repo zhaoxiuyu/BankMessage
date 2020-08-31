@@ -44,7 +44,6 @@ class AccountViewModel : VMViewModel() {
     fun GetBankList() {
         val rxHttp = BRequest(AppConstant.GetBankList, BRequest.PostForm).apply {
             silence = true
-//            params = mapOf("userid" to userid)
         }.build()
         getDatas(rxHttp, bankListLiveData, GetBankList::class.java)
     }
