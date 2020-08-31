@@ -24,14 +24,11 @@ import org.litepal.LitePal
 /**
  * 系统日志
  */
-class JournalFragment : VMFragment(), OnItemChildClickListener, RecyclerView.OnItemTouchListener {
+class JournalFragment : VMFragment(), RecyclerView.OnItemTouchListener {
 
     private val viewModel by lazy { ViewModelProvider(requireActivity()).get(AccountViewModel::class.java) }
 
     private val mAdapter by lazy { JournalAdapter() }
-
-    // 是否可以刷新页面
-    private var isReRefresh = true
 
     companion object {
         fun newInstance() = JournalFragment()
@@ -50,7 +47,6 @@ class JournalFragment : VMFragment(), OnItemChildClickListener, RecyclerView.OnI
         journalRv.layoutManager = LinearLayoutManager(requireActivity())
         journalRv.adapter = mAdapter
         journalRv.addOnItemTouchListener(this)
-        mAdapter.setOnItemChildClickListener(this)
         mAdapter.setNewInstance(
             LitePal.order("time desc").limit(2000).find(SystemJournal::class.java)
         )
@@ -67,16 +63,10 @@ class JournalFragment : VMFragment(), OnItemChildClickListener, RecyclerView.OnI
 
     @BusUtils.Bus(tag = AppConstant.BUS_RefreshJournal)
     fun receivedSMS() {
-        LogUtils.d("收到通知 刷新一次日志,是否可以刷新页面 $isReRefresh")
-
-        if (isReRefresh) {
-            mAdapter.setNewInstance(
-                LitePal.order("time desc").limit(2000).find(SystemJournal::class.java)
-            )
-        }
-    }
-
-    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        LogUtils.d("收到通知 刷新一次日志,是否可以刷新页面")
+        mAdapter.setNewInstance(
+            LitePal.order("time desc").limit(2000).find(SystemJournal::class.java)
+        )
     }
 
     override fun onDestroy() {
@@ -91,7 +81,6 @@ class JournalFragment : VMFragment(), OnItemChildClickListener, RecyclerView.OnI
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
                 Log.d("onInterceptTouchEvent", "按下事件")
-                isReRefresh = false
                 timer.cancel()
             }
             MotionEvent.ACTION_UP -> {
@@ -112,7 +101,7 @@ class JournalFragment : VMFragment(), OnItemChildClickListener, RecyclerView.OnI
     private val timer = object : CountDownTimer(20000, 1000) {
         override fun onFinish() {
             LogUtils.d("倒计时结束")
-            isReRefresh = true
+            journalRv.smoothScrollToPosition(0)
         }
 
         override fun onTick(p0: Long) {
