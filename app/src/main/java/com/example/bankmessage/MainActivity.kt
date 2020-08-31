@@ -2,6 +2,7 @@ package com.example.bankmessage
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +62,8 @@ class MainActivity : VMActivity() {
             true
         }
         navView.selectedItemId = R.id.navigation_home
+        tvRefresh.visibility = View.VISIBLE
+        tvclear.visibility = View.GONE
 
         tvStart.setOnClickListener {
             startPermission()
@@ -74,7 +77,8 @@ class MainActivity : VMActivity() {
                 "保持返回",
                 "0"
             )
-            ToastUtils.showLong("清理成功，请稍候，等待刷新")
+            BusUtils.post(AppConstant.BUS_RefreshJournal)
+            ToastUtils.showLong("清理成功")
         }
         tvRefresh.setOnClickListener {
             BusUtils.post(AppConstant.BUS_RefreshDeviceInfoList)
@@ -213,9 +217,21 @@ class MainActivity : VMActivity() {
     // 统计-工作台-消息 暂未开放，所以显示同一个 Fragment 给出相同的提示即可。
     private fun onTabSelected(position: Int) {
         when (position) {
-            0 -> showFragment(mAccountFragment, "mAccountFragment")
-            1 -> showFragment(mJournalFragment, "mJournalFragment")
-            2 -> showFragment(mOtherFragment, "mOtherFragment")
+            0 -> {
+                tvRefresh.visibility = View.VISIBLE
+                tvclear.visibility = View.GONE
+                showFragment(mAccountFragment, "mAccountFragment")
+            }
+            1 -> {
+                tvRefresh.visibility = View.GONE
+                tvclear.visibility = View.VISIBLE
+                showFragment(mJournalFragment, "mJournalFragment")
+            }
+            2 -> {
+                tvRefresh.visibility = View.GONE
+                tvclear.visibility = View.GONE
+                showFragment(mOtherFragment, "mOtherFragment")
+            }
         }
     }
 

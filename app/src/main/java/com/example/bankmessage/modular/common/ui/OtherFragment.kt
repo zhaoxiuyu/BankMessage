@@ -51,7 +51,6 @@ class OtherFragment : VMFragment(), OnItemChildClickListener {
 
         rvOther.layoutManager = LinearLayoutManager(requireActivity())
         rvOther.adapter = mAdapter
-        mAdapter.animationEnable = true
         mAdapter.setOnItemChildClickListener(this)
 
         but2.setOnClickListener {

@@ -66,7 +66,6 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
 
         homeRv.layoutManager = LinearLayoutManager(requireActivity())
         homeRv.adapter = mAdapter
-        mAdapter.animationEnable = true
         mAdapter.setOnItemChildClickListener(this)
         mAdapter.setNewInstance(getBankAll())
         mAdapter.addChildClickViewIds(
