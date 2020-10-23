@@ -2,6 +2,7 @@ package com.example.bankmessage
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -252,8 +253,17 @@ class MainActivity : VMActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.d("Activity onDestroy")
+        mDisposable?.dispose()
         receiver?.let { unregisterReceiver(it) }
+        LogUtils.d("MainActivity onDestroy")
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+            ActivityUtils.startHomeActivity()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }

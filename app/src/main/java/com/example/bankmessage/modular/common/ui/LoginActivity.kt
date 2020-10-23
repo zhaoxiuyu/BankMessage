@@ -1,6 +1,13 @@
 package com.example.bankmessage.modular.common.ui
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.PowerManager
+import android.provider.Settings
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.base.library.interfaces.MyXPopupListener
@@ -40,27 +47,29 @@ class LoginActivity : VMActivity() {
             }
             startPermission()
         }
+        ignoreBatteryOptimization()
+    }
 
-//        tieUserName.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//                LogUtils.d(p0?.toString())
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//        })
-//        val filter = InputFilter { source, start, end, dest, dstart, dend ->
-//            val regEx =
-//                "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]"
-//            val pattern = Pattern.compile(regEx)
-//            val matcher = pattern.matcher(source.toString())
-//            if (matcher.find() || source == " ") "" else null
-//        }
-//        val lengthFilter = LengthFilter(10)
-//        tieUserName.filters = arrayOf(filter, lengthFilter)
+    /**
+     * 忽略电池优化
+     */
+    private fun ignoreBatteryOptimization() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val powerManager =
+                getSystemService(Context.POWER_SERVICE) as PowerManager
+            val hasIgnored =
+                powerManager.isIgnoringBatteryOptimizations(this.packageName)
+            //  判断当前APP是否有加入电池优化的白名单，如果没有，弹出加入电池优化的白名单的设置对话框。
+            if (!hasIgnored) {
+                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                intent.data = Uri.parse("package:" + this.packageName)
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            } else {
+                Log.d("ignoreBattery", "hasIgnored")
+            }
+        }
     }
 
     private fun initResponse() {

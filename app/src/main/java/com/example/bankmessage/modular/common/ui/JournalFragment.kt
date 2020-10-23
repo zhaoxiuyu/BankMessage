@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.base.library.mvvm.core.VMFragment
 import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.example.bankmessage.R
 import com.example.bankmessage.base.AppConstant
 import com.example.bankmessage.entity.SystemJournal
@@ -68,11 +65,6 @@ class JournalFragment : VMFragment(), RecyclerView.OnItemTouchListener {
         )
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        BusUtils.unregister(this)
-    }
-
     override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
     }
 
@@ -106,6 +98,12 @@ class JournalFragment : VMFragment(), RecyclerView.OnItemTouchListener {
         override fun onTick(p0: Long) {
             Log.d("倒计时 :", "$p0")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LogUtils.d("JournalFragment - onDestroy")
+        BusUtils.unregister(this)
     }
 
 }

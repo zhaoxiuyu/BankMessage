@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.base.library.mvvm.core.VMFragment
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
@@ -47,6 +48,8 @@ class OtherFragment : VMFragment(), OnItemChildClickListener {
 
     override fun initData() {
         initResponse()
+
+        tv_version_name.text = "当前版本 : ${AppUtils.getAppVersionName()}"
 
         rvOther.layoutManager = LinearLayoutManager(requireActivity())
         rvOther.adapter = mAdapter

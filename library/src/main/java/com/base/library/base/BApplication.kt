@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.lxj.xpopup.XPopup
 import com.tencent.bugly.Bugly
+import org.litepal.LitePal
 import rxhttp.RxHttpPlugins
 import rxhttp.wrapper.param.RxHttp
 import java.io.File
@@ -23,7 +24,7 @@ open class BApplication : MultiDexApplication() {
         utilcode()
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.base_sb_pressed))
         initRxHttp()
-
+        LitePal.initialize(this)
         Bugly.init(applicationContext, "ca8945593e", false)
     }
 

@@ -309,6 +309,8 @@ class AccountFragment : VMFragment(), OnItemChildClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        LogUtils.d("AuucountFragment - onDestroy")
+        mDisposable?.dispose()
         BusUtils.unregister(this)
     }
 
