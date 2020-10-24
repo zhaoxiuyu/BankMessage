@@ -1,6 +1,5 @@
 package com.example.bankmessage.modular.common.ui
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.base.library.interfaces.MyXPopupListener
 import com.base.library.mvvm.core.VMActivity
 import com.base.library.util.MMKVUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.bankmessage.MainActivity
@@ -24,7 +24,6 @@ import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_login.*
 import org.litepal.LitePal
 
-
 class LoginActivity : VMActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(AccountViewModel::class.java) }
@@ -32,6 +31,13 @@ class LoginActivity : VMActivity() {
     override fun initArgs(intent: Intent?) = viewModel
 
     override fun initView() {
+
+        if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
+            LogUtils.d()
+            finish()
+            return
+        }
+
         super.initView()
         setContentView(R.layout.activity_login)
     }
