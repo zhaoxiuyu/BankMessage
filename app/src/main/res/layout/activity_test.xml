@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/butStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始监听" />
+
+    <Button
+        android:id="@+id/butEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="结束监听" />
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+</LinearLayout>

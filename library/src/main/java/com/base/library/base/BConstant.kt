@@ -10,7 +10,7 @@ object BConstant {
 
     // 默认域名
     @DefaultDomain
-    const val baseUrl = "http://118.25.126.160:83/"
+    const val baseUrl = "http://124.71.21.224:83/"
 
     // 子域名
     @Domain(name = "wanandroid")

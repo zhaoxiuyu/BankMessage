@@ -53,6 +53,9 @@ class LoginActivity : VMActivity() {
             }
             startPermission()
         }
+        toTest.setOnClickListener {
+            startActivity(Intent(this, TestActivity::class.java))
+        }
         ignoreBatteryOptimization()
     }
 

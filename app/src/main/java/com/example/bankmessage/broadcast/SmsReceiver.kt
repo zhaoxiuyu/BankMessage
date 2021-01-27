@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.example.bankmessage.base.AppConstant
 import com.example.bankmessage.base.ChangeConstant
 import com.example.bankmessage.entity.SystemJournal
+import com.example.bankmessage.modular.common.ui.Test
 import com.example.bankmessage.utils.DataUtils
 
 class SmsReceiver : BroadcastReceiver() {
@@ -18,8 +19,14 @@ class SmsReceiver : BroadcastReceiver() {
     override fun onReceive(p0: Context?, intent: Intent?) {
         // 短信监听打开的状态才读取短信内容
         if (ChangeConstant.isMonitor) {
+//            val test = Test()
+//            test.onReceive(p0, intent)
+
             intent?.let {
                 val content = StringBuilder() //用于存储短信内容
+                val sbMessageBody = StringBuilder()
+                val sbOriginatingAddress = StringBuilder()
+
                 val bundle = it.extras //通过getExtras()方法获取短信内容
                 val format = it.getStringExtra("format")
                 LogUtils.d("format $format")
@@ -35,24 +42,26 @@ class SmsReceiver : BroadcastReceiver() {
                             } else {
                                 SmsMessage.createFromPdu(item as ByteArray, format)
                             }
-                            val info =
-                                "originatingAddress=${mSmsMessage?.originatingAddress} ; messageBody=${mSmsMessage?.messageBody}"
-                            content.appendln(info) //获取短信内容
+
+                            // 短信可能会被分割 多次发送,这里对短信内容进行累加
+                            sbMessageBody.append(mSmsMessage?.messageBody)
                         }
+                        sbOriginatingAddress.append(mSmsMessage?.originatingAddress)
+
                         // 保存到日志数据库
                         DataUtils.saveSystemJournal(
-                            "收到信息",
-                            "${mSmsMessage?.messageBody}",
-                            "${mSmsMessage?.originatingAddress}"
+                            "收到信息", "$sbMessageBody", "$sbOriginatingAddress"
                         )
                         // 通知Fragment去提交短信
                         val params = SystemJournal()
-                        params.tel = "${mSmsMessage?.originatingAddress}"
-                        params.msg = "${mSmsMessage?.messageBody}"
+                        params.tel = "$sbOriginatingAddress"
+                        params.msg = "$sbMessageBody"
                         BusUtils.post(AppConstant.BUS_ReceivedSMS, GsonUtils.toJson(params))
                     }
                 }
-                LogUtils.d(content.toString())
+                content.appendln("发送人 : $sbOriginatingAddress")
+                content.appendln("内容 : $sbMessageBody")
+                LogUtils.d(content)
             }
         }
     }
